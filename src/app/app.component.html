@@ -1,6 +1,16 @@
 <h1>Can you name all the pokemons?</h1>
+<input
+  type="text"
+  name="pokemonSearch"
+  [(ngModel)]="pokemonSearch"
+  placeholder="Insert a pokemon name"
+  (keyup.enter)="onEnterKeyUp(pokemonSearch)"
+/>
 <ul>
-  <li *ngFor="let pokemon of pokemonList; let i = index">
-    {{ i + 1 }} {{ pokemon.name }}
+  <li *ngFor="let pokemon of pokemonList">
+    <p *ngIf="pokemon.isFound; else notFoundYet">
+      {{ pokemon.id }} {{ pokemon.name }}
+    </p>
+    <ng-template #notFoundYet>{{ pokemon.id }} ---</ng-template>
   </li>
 </ul>
