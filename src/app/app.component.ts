@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Generations, getGeneration } from 'src/types/Generations';
 import { PokemonListItem } from 'src/types/PokemonListItem';
+import { PokemonSpeciesDTO } from 'src/types/PokemonSpeciesDTO';
 import { PokemonService } from '../service/pokemon.service';
 
 @Component({
@@ -9,23 +10,26 @@ import { PokemonService } from '../service/pokemon.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  generations = Object.keys(Generations);
   pokemonList: Array<PokemonListItem> = [];
   pokemonSearch: string = '';
-  generations = Object.keys(Generations);
 
   constructor(private service: PokemonService) {}
 
+  private populatePokemonList(dto: PokemonSpeciesDTO) {
+    return (this.pokemonList = dto.results.map((item) => {
+      return {
+        id: item.url.split('/')[6],
+        name: item.name,
+        isFound: false,
+      };
+    }));
+  }
+
   ngOnInit() {
-    this.service.getAllPokemons(Generations.GENERATION_ONE).subscribe(
-      (dto) =>
-        (this.pokemonList = dto.results.map((item) => {
-          return {
-            id: item.url.split('/')[6],
-            name: item.name,
-            isFound: false,
-          };
-        }))
-    );
+    this.service
+      .getAllPokemons(Generations.GENERATION_ONE)
+      .subscribe((dto) => this.populatePokemonList(dto));
   }
 
   onEnterKeyUp(search: string): void {
@@ -55,15 +59,8 @@ export class AppComponent implements OnInit {
 
     if (endpoint === '') return;
 
-    this.service.getAllPokemons(endpoint).subscribe(
-      (dto) =>
-        (this.pokemonList = dto.results.map((item) => {
-          return {
-            id: item.url.split('/')[6],
-            name: item.name,
-            isFound: false,
-          };
-        }))
-    );
+    this.service
+      .getAllPokemons(endpoint)
+      .subscribe((dto) => this.populatePokemonList(dto));
   }
 }
