@@ -26,23 +26,25 @@ export class AppComponent implements OnInit {
     }));
   }
 
-  ngOnInit() {
-    this.service
-      .getAllPokemons(Generations.GENERATION_ONE)
-      .subscribe((dto) => this.populatePokemonList(dto));
-  }
-
-  onEnterKeyUp(search: string): void {
+  private findPokemonBySearch(search: string) {
     const isIndexFound = this.pokemonList.findIndex(
       (pokemon) => pokemon.name === search && !pokemon.isFound
     );
 
     if (isIndexFound === -1) return;
 
-    const pokemonFound = this.pokemonList[isIndexFound];
+    return this.pokemonList[isIndexFound];
+  }
 
-    this.pokemonSearch = '';
-    pokemonFound.isFound = true;
+  private areAllPokemonFound() {
+    const allPokemonsFound = this.pokemonList.every(
+      (pokemon) => pokemon.isFound
+    );
+
+    if (allPokemonsFound) alert('You did it!!!');
+  }
+
+  private setPokemonSprite(pokemonFound: PokemonListItem) {
     const observablePokemon = this.service.getPokemon(pokemonFound.id);
 
     if (!observablePokemon) return;
@@ -50,6 +52,24 @@ export class AppComponent implements OnInit {
     observablePokemon.subscribe(
       (pokemon) => (pokemonFound.sprite = pokemon.sprites.front_default)
     );
+  }
+
+  ngOnInit() {
+    this.service
+      .getAllPokemons(Generations.GENERATION_ONE)
+      .subscribe((dto) => this.populatePokemonList(dto));
+  }
+
+  onEnterKeyUp(search: string): void {
+    const pokemonFound = this.findPokemonBySearch(search);
+    if (!pokemonFound) return;
+
+    pokemonFound.isFound = true;
+    this.pokemonSearch = '';
+
+    this.areAllPokemonFound();
+
+    this.setPokemonSprite(pokemonFound);
   }
 
   onSelectChange(event: Event) {
