@@ -3,16 +3,18 @@ import { Generations, getGeneration } from 'src/types/Generations';
 import { PokemonListItem } from 'src/types/PokemonListItem';
 import { PokemonSpeciesDTO } from 'src/types/PokemonSpeciesDTO';
 import { PokemonService } from '../service/pokemon.service';
-
+import { faQuestion } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  title = 'Can you name all the pokemons?';
   generations = Object.keys(Generations);
   pokemonList: Array<PokemonListItem> = [];
   pokemonSearch: string = '';
+  faQuestion = faQuestion;
 
   constructor(private service: PokemonService) {}
 

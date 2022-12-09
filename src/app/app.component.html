@@ -1,25 +1,34 @@
-<h1>Can you name all the pokemons?</h1>
-<div>
-  <legend>Custom controls</legend>
-  <select id="select" (change)="onSelectChange($event)">
-    <option *ngFor="let generation of generations" [value]="generation">
-      {{ generation.replace("_", " ") }}
-    </option>
-  </select>
-</div>
-<input
-  type="text"
-  name="pokemonSearch"
-  [(ngModel)]="pokemonSearch"
-  placeholder="Insert a pokemon name"
-  (keyup.enter)="onEnterKeyUp(pokemonSearch)"
-/>
-<ul>
-  <li *ngFor="let pokemon of pokemonList">
-    <div *ngIf="pokemon.isFound; else notFoundYet">
-      <p>{{ pokemon.id }} {{ pokemon.name }}</p>
-      <img src="{{ pokemon.sprite }}" />
-    </div>
-    <ng-template #notFoundYet>{{ pokemon.id }} ---</ng-template>
-  </li>
-</ul>
+<main class="container">
+  <h1 class="title">{{ title }}</h1>
+
+  <div>
+    <legend>Select the generation</legend>
+    <select id="select" (change)="onSelectChange($event)">
+      <option *ngFor="let generation of generations" [value]="generation">
+        {{ generation.replace("_", " ") }}
+      </option>
+    </select>
+  </div>
+
+  <input
+    class="input"
+    type="text"
+    name="pokemonSearch"
+    [(ngModel)]="pokemonSearch"
+    placeholder="Name"
+    (keyup.enter)="onEnterKeyUp(pokemonSearch)"
+  />
+
+  <ul class="list">
+    <li *ngFor="let pokemon of pokemonList">
+      <div *ngIf="pokemon.isFound; else notFoundYet" class="card">
+        <img src="{{ pokemon.sprite }}" />
+        <p>{{ pokemon.id }}. {{ pokemon.name }}</p>
+      </div>
+      <ng-template #notFoundYet>
+        <fa-icon [icon]="faQuestion"></fa-icon>
+        <p>{{ pokemon.id }}. ---</p>
+      </ng-template>
+    </li>
+  </ul>
+</main>
