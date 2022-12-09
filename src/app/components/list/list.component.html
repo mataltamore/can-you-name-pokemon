@@ -1,0 +1,12 @@
+<ul class="container">
+  <li *ngFor="let pokemon of pokemonList" class="item">
+    <div *ngIf="pokemon.isFound; else notFoundYet" class="card">
+      <img src="{{ pokemon.sprite }}" />
+      <p>{{ pokemon.id }}. {{ pokemon.name }}</p>
+    </div>
+    <ng-template #notFoundYet>
+      <fa-icon [icon]="faQuestion"></fa-icon>
+      <p>{{ pokemon.id }}. ---</p>
+    </ng-template>
+  </li>
+</ul>

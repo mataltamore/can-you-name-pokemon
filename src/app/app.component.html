@@ -1,34 +1,9 @@
 <main class="container">
   <h1 class="title">{{ title }}</h1>
 
-  <div>
-    <legend>Select the generation</legend>
-    <select id="select" (change)="onSelectChange($event)">
-      <option *ngFor="let generation of generations" [value]="generation">
-        {{ generation.replace("_", " ") }}
-      </option>
-    </select>
-  </div>
+  <app-generation-select [(pokemonList)]="pokemonList"></app-generation-select>
 
-  <input
-    class="input"
-    type="text"
-    name="pokemonSearch"
-    [(ngModel)]="pokemonSearch"
-    placeholder="Name"
-    (keyup.enter)="onEnterKeyUp(pokemonSearch)"
-  />
+  <app-search-input [(pokemonList)]="pokemonList"></app-search-input>
 
-  <ul class="list">
-    <li *ngFor="let pokemon of pokemonList">
-      <div *ngIf="pokemon.isFound; else notFoundYet" class="card">
-        <img src="{{ pokemon.sprite }}" />
-        <p>{{ pokemon.id }}. {{ pokemon.name }}</p>
-      </div>
-      <ng-template #notFoundYet>
-        <fa-icon [icon]="faQuestion"></fa-icon>
-        <p>{{ pokemon.id }}. ---</p>
-      </ng-template>
-    </li>
-  </ul>
+  <app-list [pokemonList]="pokemonList"></app-list>
 </main>

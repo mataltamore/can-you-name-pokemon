@@ -1,0 +1,7 @@
+<div>
+  <select id="select" (change)="onSelectChange($event)">
+    <option *ngFor="let generation of generations" [value]="generation">
+      {{ generation.replace("_", " ") }}
+    </option>
+  </select>
+</div>

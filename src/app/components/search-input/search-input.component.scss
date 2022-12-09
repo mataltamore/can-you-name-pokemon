@@ -1,0 +1,13 @@
+@import "../../../styles/mixins.scss";
+@import "../../../styles/variables.scss";
+
+.input {
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  border: 1px solid black;
+  border-radius: 5px;
+
+  &:focus {
+    outline: none;
+  }
+}
