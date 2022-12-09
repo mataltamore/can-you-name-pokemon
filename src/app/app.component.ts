@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonListItem } from 'src/types/PokemonListItem';
-import { PokemonService } from './service/pokemon.service';
+import { PokemonService } from '../service/pokemon.service';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +16,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.service.getAllPokemons().subscribe(
       (dto) =>
-        (this.pokemonList = dto.results.map((item, i) => {
+        (this.pokemonList = dto.results.map((item) => {
           return {
-            id: i + 1,
+            id: item.url.split('/')[6],
             name: item.name,
             isFound: false,
           };

@@ -1,5 +1,6 @@
 export type PokemonListItem = {
-  id: number;
+  id: string;
   name: string;
   isFound: boolean;
+  sprite?: string;
 };
