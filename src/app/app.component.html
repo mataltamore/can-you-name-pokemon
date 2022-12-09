@@ -8,9 +8,10 @@
 />
 <ul>
   <li *ngFor="let pokemon of pokemonList">
-    <p *ngIf="pokemon.isFound; else notFoundYet">
-      {{ pokemon.id }} {{ pokemon.name }}
-    </p>
+    <div *ngIf="pokemon.isFound; else notFoundYet">
+      <p>{{ pokemon.id }} {{ pokemon.name }}</p>
+      <img src="{{ pokemon.sprite }}" />
+    </div>
     <ng-template #notFoundYet>{{ pokemon.id }} ---</ng-template>
   </li>
 </ul>

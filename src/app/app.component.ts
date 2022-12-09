@@ -33,7 +33,16 @@ export class AppComponent implements OnInit {
 
     if (isIndexFound === -1) return;
 
+    const pokemonFound = this.pokemonList[isIndexFound];
+
     this.pokemonSearch = '';
-    this.pokemonList[isIndexFound].isFound = true;
+    pokemonFound.isFound = true;
+    const observablePokemon = this.service.getPokemon(pokemonFound.id);
+
+    if (!observablePokemon) return;
+
+    observablePokemon.subscribe(
+      (pokemon) => (pokemonFound.sprite = pokemon.sprites.front_default)
+    );
   }
 }
