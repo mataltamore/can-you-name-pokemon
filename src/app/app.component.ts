@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
 
   private findPokemonBySearch(search: string) {
     const isIndexFound = this.pokemonList.findIndex(
-      (pokemon) => pokemon.name === search && !pokemon.isFound
+      (pokemon) => pokemon.name === search.toLowerCase() && !pokemon.isFound
     );
 
     if (isIndexFound === -1) return;
