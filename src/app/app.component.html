@@ -1,4 +1,12 @@
 <h1>Can you name all the pokemons?</h1>
+<div>
+  <legend>Custom controls</legend>
+  <select id="select" (change)="onSelectChange($event)">
+    <option *ngFor="let generation of generations" [value]="generation">
+      {{ generation.replace("_", " ") }}
+    </option>
+  </select>
+</div>
 <input
   type="text"
   name="pokemonSearch"

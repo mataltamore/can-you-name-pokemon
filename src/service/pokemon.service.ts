@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { PokemonSpeciesDTO } from 'src/types/PokemonSpeciesDTO';
 import { PokemonDTO } from 'src/types/PokemonDTO';
 
-const SPECIES_BASE_URL =
-  'https://pokeapi.co/api/v2/pokemon-species/?offset=0&limit=151"';
+const SPECIES_BASE_URL = 'https://pokeapi.co/api/v2/pokemon-species';
 
 const POKEMON_BASE_URL = 'https://pokeapi.co/api/v2/pokemon';
 
@@ -14,8 +13,10 @@ const POKEMON_BASE_URL = 'https://pokeapi.co/api/v2/pokemon';
 export class PokemonService {
   constructor(private httpClient: HttpClient) {}
 
-  getAllPokemons() {
-    return this.httpClient.get<PokemonSpeciesDTO>(SPECIES_BASE_URL);
+  getAllPokemons(endpoint: string) {
+    return this.httpClient.get<PokemonSpeciesDTO>(
+      `${SPECIES_BASE_URL}/${endpoint}`
+    );
   }
 
   getPokemon(id: string) {
